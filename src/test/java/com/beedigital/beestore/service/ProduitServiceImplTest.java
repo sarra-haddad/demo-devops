@@ -106,4 +106,65 @@ class ProduitServiceImplTest {
         assertThat(resultat).hasSize(1);
         assertThat(resultat.get(0).getStock()).isZero();
     }
+
+
+    @Test
+    @DisplayName("modifierProduit() doit modifier les informations du produit")
+    void modifierProduit_doitModifierProduit() {
+
+        // GIVEN : produit existant
+        Produit produit = Produit.builder()
+                .id(1L)
+                .nom("Laptop")
+                .prix(1000.0)
+                .stock(5)
+                .actif(true)
+                .build();
+
+        // Nouvelles informations
+        ProduitRequestDTO dto = new ProduitRequestDTO();
+        dto.setNom("Laptop Pro");
+        dto.setPrix(1500.0);
+        dto.setStock(10);
+        dto.setActif(false);
+
+        when(produitRepository.findById(1L))
+                .thenReturn(Optional.of(produit));
+
+        when(produitRepository.save(any(Produit.class)))
+                .thenAnswer(invocation -> invocation.getArgument(0));
+
+        // WHEN
+        ProduitResponseDTO resultat =
+                produitService.modifierProduit(1L, dto);
+
+        // THEN
+        assertThat(resultat.getNom()).isEqualTo("Laptop Pro");
+        assertThat(resultat.getPrix()).isEqualTo(1500.0);
+        assertThat(resultat.getStock()).isEqualTo(10);
+        assertThat(resultat.getActif()).isFalse();
+
+        verify(produitRepository).save(any(Produit.class));
+    }
+    @Test
+    @DisplayName("modifierProduit() doit lever une exception si le produit est absent")
+    void modifierProduit_produitAbsent_doitLeverException() {
+
+        // GIVEN
+        ProduitRequestDTO dto = new ProduitRequestDTO();
+        dto.setNom("Laptop Pro");
+        dto.setPrix(1500.0);
+        dto.setStock(10);
+
+        when(produitRepository.findById(99L))
+                .thenReturn(Optional.empty());
+
+        // WHEN + THEN
+        assertThatThrownBy(() ->
+                produitService.modifierProduit(99L, dto))
+                .isInstanceOf(ProduitNotFoundException.class);
+
+        verify(produitRepository, never())
+                .save(any(Produit.class));
+    }
 }

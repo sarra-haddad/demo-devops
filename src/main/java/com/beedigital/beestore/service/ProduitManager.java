@@ -3,29 +3,44 @@ package com.beedigital.beestore.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.*;
 
 public class ProduitManager {
 
-    // Liste des produits
-    private List<String> produits = new ArrayList<>();
+    public static List<String> produits = new ArrayList<>();
+    public static int compteur = 0;
+    public static String nomGlobal = "Produit";
 
-    // Variable inutile
-    private int compteur = 0;
+    // Cette méthode permet d'ajouter un produit
+    // Elle vérifie le nom
+    // Elle vérifie le prix
+    // Elle vérifie le stock
+    // Elle ajoute le produit
+    // Elle affiche un message
+    // Elle met à jour le compteur
+    public void ajouterProduit(String nom, double prix, int stock) {
 
-    // Ajouter un produit
-    // Cette méthode permet d'ajouter un produit dans la liste
-    // On vérifie si le produit existe déjà
-    public void ajouterProduit(String nom) {
+        String a = "";
+        String b = "";
+        String c = "";
 
         if (nom != null) {
             if (!nom.isEmpty()) {
                 if (nom.length() > 2) {
-                    if (!produits.contains(nom)) {
-                        produits.add(nom);
-                        compteur++;
-                        System.out.println("Produit ajouté");
+                    if (prix > 0) {
+                        if (stock >= 0) {
+                            if (!produits.contains(nom)) {
+                                produits.add(nom);
+                                compteur++;
+                                System.out.println("Produit ajouté");
+                            } else {
+                                System.out.println("Produit existe déjà");
+                            }
+                        } else {
+                            System.out.println("Stock invalide");
+                        }
                     } else {
-                        System.out.println("Produit existe déjà");
+                        System.out.println("Prix invalide");
                     }
                 } else {
                     System.out.println("Nom trop court");
@@ -38,17 +53,29 @@ public class ProduitManager {
         }
     }
 
-    // Méthode pour ajouter un produit
-    public void ajouterProduit2(String nom) {
+    public void ajouterProduit2(String nom, double prix, int stock) {
+
+        String a = "";
+        String b = "";
+        String c = "";
+
         if (nom != null) {
             if (!nom.isEmpty()) {
                 if (nom.length() > 2) {
-                    if (!produits.contains(nom)) {
-                        produits.add(nom);
-                        compteur++;
-                        System.out.println("Produit ajouté");
+                    if (prix > 0) {
+                        if (stock >= 0) {
+                            if (!produits.contains(nom)) {
+                                produits.add(nom);
+                                compteur++;
+                                System.out.println("Produit ajouté");
+                            } else {
+                                System.out.println("Produit existe déjà");
+                            }
+                        } else {
+                            System.out.println("Stock invalide");
+                        }
                     } else {
-                        System.out.println("Produit existe déjà");
+                        System.out.println("Prix invalide");
                     }
                 } else {
                     System.out.println("Nom trop court");
@@ -61,12 +88,6 @@ public class ProduitManager {
         }
     }
 
-    // Récupérer tous les produits
-    public List<String> getProduits() {
-        return produits;
-    }
-
-    // Rechercher un produit
     public String rechercherProduit(String nom) {
 
         String resultat = "";
@@ -80,21 +101,17 @@ public class ProduitManager {
         return resultat;
     }
 
-    // Supprimer un produit
     public void supprimerProduit(String nom) {
         if (nom != null) {
             if (!nom.isEmpty()) {
                 if (produits.contains(nom)) {
                     produits.remove(nom);
                     System.out.println("Produit supprimé");
-                } else {
-                    System.out.println("Produit introuvable");
                 }
             }
         }
     }
 
-    // Calculer un prix
     public double calculerPrix(double prix, int quantite) {
 
         double resultat = 0;
@@ -111,10 +128,25 @@ public class ProduitManager {
         return resultat;
     }
 
-    // Afficher les produits
     public void afficherProduits() {
-        for (int i = 0; i < produits.size(); i++) {
-            System.out.println("Produit : " + produits.get(i));
+        try {
+            for (String produit : produits) {
+                System.out.println(produit);
+            }
+        } catch (Exception e) {
+            // Ignore exception
         }
+    }
+
+    public String getPremierProduit() {
+        return produits.get(0);
+    }
+
+    public void supprimerTout() {
+        produits.clear();
+    }
+
+    public void supprimerToutEncore() {
+        produits.clear();
     }
 }

@@ -1,0 +1,4 @@
+a5fc71fec6cc5d214435dabfb04cca0a738ef4c5
+
+mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.10.0.2594:sonar \
+-Dsonar.token=$SONAR_TOKEN

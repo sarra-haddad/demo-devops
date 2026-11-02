@@ -40,8 +40,8 @@
         <java.version>17</java.version>
 
         <!-- Connexion SonarCloud -->
-        <sonar.projectKey>amdouni-bilel_beestore-java</sonar.projectKey>
-        <sonar.organization>amdouni-bilel</sonar.organization>
+        <sonar.projectKey>sarra-haddad_demo-devops</sonar.projectKey>
+        <sonar.organization>sarra-haddad</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 
         <!-- Indique à SonarCloud où trouver le rapport JaCoCo -->
